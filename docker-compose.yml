@@ -47,7 +47,7 @@ services:
       - KEY_FILE=${GITEA_KEY_FILE}
       - HTTP_PORT=443
       - SSH_PORT=2222
-      - ALLOWED_HOST_LIST=host.docker.internal
+      - ALLOWED_HOST_LIST=${GITEA_ALLOWED_HOST_LIST}
     restart: always
     networks:
       - gitea
