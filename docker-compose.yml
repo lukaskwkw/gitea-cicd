@@ -15,13 +15,14 @@ volumes:
 
 services:
   reverseproxy:
+    container_name: gitea-reverseproxy
     build:
       context: .
       dockerfile: nginx.Dockerfile
     ports:
       - "8443:8443"
     volumes:
-      - mkcert-data:/tmp-certs
+      - mkcert-data:/app/certs/
     restart: always
     networks:
       - gitea
@@ -54,8 +55,7 @@ services:
     volumes:
       - gitea-config:/data
       - gitea:/app/gitea/data
-      - mkcert-data:/tmp-certs
-      - mkcert-data:/root/.local/share/mkcert/
+      - mkcert-data:/app/certs/
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
@@ -95,8 +95,7 @@ services:
       - 9000
     volumes:
       - drone:/var/lib/drone/
-      - mkcert-data:/tmp-certs
-      - mkcert-data:/root/.local/share/mkcert/
+      - mkcert-data:/app/certs/
     restart: always
     depends_on:
       - server
@@ -135,8 +134,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - drone-agent:/data
-      - mkcert-data:/tmp-certs
-      - mkcert-data:/root/.local/share/mkcert/
+      - mkcert-data:/app/certs/
     environment:
       - DRONE_RPC_SERVER=${DRONE_HOST}
       - DRONE_RPC_SECRET=${DRONE_RPC_SECRET}
